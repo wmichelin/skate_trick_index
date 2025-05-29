@@ -15,8 +15,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from . import views
+
+app_name = 'skate_trick_index'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.trick_list, name='trick_list'),
+    path('trick/<int:trick_id>/', views.trick_detail, name='trick_detail'),
+    path('trick/<int:trick_id>/progress/', views.update_progress, name='update_progress'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

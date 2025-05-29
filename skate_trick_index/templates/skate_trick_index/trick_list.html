@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Skate Trick Index</h1>
+    
+    <!-- Filters -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form method="get" class="form-inline">
+                <select name="category" class="form-select me-2">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"i" %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+                
+                <select name="difficulty" class="form-select me-2">
+                    <option value="">All Difficulties</option>
+                    <option value="beginner" {% if request.GET.difficulty == 'beginner' %}selected{% endif %}>Beginner</option>
+                    <option value="intermediate" {% if request.GET.difficulty == 'intermediate' %}selected{% endif %}>Intermediate</option>
+                    <option value="advanced" {% if request.GET.difficulty == 'advanced' %}selected{% endif %}>Advanced</option>
+                    <option value="pro" {% if request.GET.difficulty == 'pro' %}selected{% endif %}>Pro</option>
+                </select>
+                
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Trick List -->
+    <div class="row">
+        {% for trick in tricks %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if trick.image %}
+                <img src="{{ trick.image.url }}" class="card-img-top" alt="{{ trick.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ trick.name }}</h5>
+                    <p class="card-text">{{ trick.description|truncatewords:30 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="badge bg-{{ trick.difficulty }}">{{ trick.get_difficulty_display }}</span>
+                        <a href="{% url 'skate_trick_index:trick_detail' trick.id %}" class="btn btn-outline-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-center">No tricks found matching your criteria.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 
