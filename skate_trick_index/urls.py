@@ -18,15 +18,10 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from . import views
-
-app_name = 'skate_trick_index'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.trick_list, name='trick_list'),
-    path('trick/<int:trick_id>/', views.trick_detail, name='trick_detail'),
-    path('trick/<int:trick_id>/progress/', views.update_progress, name='update_progress'),
+    path('', include('skate_trick_index.app_urls')),
 ]
 
 if settings.DEBUG:

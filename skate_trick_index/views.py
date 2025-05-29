@@ -3,6 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import SkateTrick, TrickCategory, UserProgress
 
+def landing_page(request):
+    """Display the landing page."""
+    return render(request, 'skate_trick_index/landing.html')
+
 def trick_list(request):
     """Display all skate tricks with filtering options."""
     tricks = SkateTrick.objects.all()

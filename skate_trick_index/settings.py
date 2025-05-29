@@ -57,7 +57,9 @@ ROOT_URLCONF = 'skate_trick_index.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'skate_trick_index' / 'templates'],
+        'DIRS': [
+            BASE_DIR / 'skate_trick_index' / 'templates',
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
